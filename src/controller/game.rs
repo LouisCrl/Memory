@@ -30,10 +30,10 @@ impl Game {
                             next_frame().await;
                         }
                         continue;
-                    },
+                    }
                     EndGameChoice::Quit => {
                         break;
-                    },
+                    }
                 }
             } else {
                 break;
