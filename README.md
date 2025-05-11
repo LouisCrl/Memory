@@ -1,6 +1,6 @@
 # Rust Memory
 
-![main_screen](https://github.com/user-attachments/assets/59bfd6e3-652d-4987-b0c1-19ea16aac2d9)
+![main_screen](https://github.com/user-attachments/assets/3f54fe6e-d61b-474b-9615-f728998ff9f4)
 
 ## Installation
 
