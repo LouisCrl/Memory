@@ -34,9 +34,35 @@ pub enum Tile {
 
 impl Tile {
     pub fn all_variants() -> &'static [Tile] {
-        &[Tile::Circle1, Tile::Circle2, Tile::Circle3, Tile::Circle4, Tile::Circle5, Tile::Circle6, Tile::Circle7, Tile::Circle8, Tile::Circle9,
-        Tile::Stick1, Tile::Stick2, Tile::Stick3, Tile::Stick4, Tile::Stick5, Tile::Stick6, Tile::Stick7, Tile::Stick8, Tile::Stick9,
-        Tile::Character1, Tile::Character2, Tile::Character3, Tile::Character4, Tile::Character5, Tile::Character6, Tile::Character7, Tile::Character8, Tile::Character9]
+        &[
+            Tile::Circle1,
+            Tile::Circle2,
+            Tile::Circle3,
+            Tile::Circle4,
+            Tile::Circle5,
+            Tile::Circle6,
+            Tile::Circle7,
+            Tile::Circle8,
+            Tile::Circle9,
+            Tile::Stick1,
+            Tile::Stick2,
+            Tile::Stick3,
+            Tile::Stick4,
+            Tile::Stick5,
+            Tile::Stick6,
+            Tile::Stick7,
+            Tile::Stick8,
+            Tile::Stick9,
+            Tile::Character1,
+            Tile::Character2,
+            Tile::Character3,
+            Tile::Character4,
+            Tile::Character5,
+            Tile::Character6,
+            Tile::Character7,
+            Tile::Character8,
+            Tile::Character9,
+        ]
     }
 }
 
