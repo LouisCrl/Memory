@@ -1,2 +1,1 @@
-pub mod view;
-pub mod console;
+pub mod ui;
