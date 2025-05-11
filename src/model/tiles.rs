@@ -1,6 +1,8 @@
+//this file is all the tile management
 use rand::seq::SliceRandom;
 use rand::seq::IndexedRandom;
 
+//this enum is every tiles
 #[derive(Debug, Clone, PartialEq)]
 pub enum Tile {
     Circle1,
@@ -33,6 +35,7 @@ pub enum Tile {
 }
 
 impl Tile {
+    //gives all variants of tiles in a static array
     pub fn all_variants() -> &'static [Tile] {
         &[
             Tile::Circle1,
@@ -66,18 +69,21 @@ impl Tile {
     }
 }
 
+//this enum gives the TileState
 #[derive(Debug, Clone, PartialEq)]
 pub enum TileState {
     Discovered,
     NotDiscovered,
 }
 
+//this struct are the tiles
 pub struct Tiles {
     tiles: Vec<Vec<Tile>>,
     tiles_state: Vec<Vec<TileState>>,
 }
 
 impl Tiles {
+    //initialisation of the struct
     pub fn init(nb_pairs: usize) -> Self{
         let generated_tiles = Self::generate_tiles(nb_pairs);
         Tiles {
@@ -86,14 +92,17 @@ impl Tiles {
         }
     }
 
+    //return tiles
     pub fn tiles(&self) -> &Vec<Vec<Tile>> {
         &self.tiles
     }
 
+    //return tiles_state
     pub fn tiles_state(&self) -> &Vec<Vec<TileState>> {
         &self.tiles_state
     }
 
+    //generate a board of random tiles
     pub fn generate_tiles(pairs: usize) -> Vec<Vec<Tile>> {
         let total_tiles = pairs * 2;
         let mut flat_tiles = Vec::new();
@@ -125,19 +134,23 @@ impl Tiles {
         tiles
     }
 
+    //shuffle the board
     pub fn shuffle_tiles(tiles: &mut Vec<Tile>) {
         let mut rng = rand::rng();
         tiles.shuffle(&mut rng);
     }
 
+    //check if a Tile is Discovered
     pub fn check_possible(&self, (c1, c2): &(usize, usize)) -> bool {
         self.tiles_state[*c1][*c2] != TileState::Discovered
     }
 
+    //change the state of a tile
     pub fn change_tile(&mut self, (c1, c2): (usize, usize)) {
         self.tiles_state[c1][c2] = TileState::Discovered;
     }
 
+    //check if the 2 choosed tiles are the same
     pub fn check_equals_tiles(&self, c1: &Tile, c2: &Tile) -> bool {
         if c1 == c2{
             return true;
@@ -145,6 +158,7 @@ impl Tiles {
         false
     }
 
+    //check if all tiles are discovered
     pub fn check_all_discovered(&self) -> bool {
         for row in &self.tiles_state {
             for tile in row {

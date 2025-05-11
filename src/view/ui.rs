@@ -1,9 +1,11 @@
+//this file is the UI management
 use std::thread;
 use std::time::Duration;
 use macroquad::prelude::*;
 use crate::model::tiles::{Tiles, TileState, Tile};
 use crate::controller::game::{GameState, EndGameChoice};
 
+//colors used in the program
 const RASPBERRY:Color = Color::new(199.0 / 255.0, 44.0 / 255.0, 72.0 / 255.0, 1.0);
 pub const GREY_PURPLE:Color = Color::new(234.0 / 255.0, 230.0 / 255.0, 248.0 / 255.0, 1.0);
 const DARKER_GREY_PURPLE: Color = Color::new(200.0 / 255.0, 196.0 / 255.0, 220.0 / 255.0, 1.0);
@@ -11,6 +13,7 @@ const DARKER_GREY_PURPLE: Color = Color::new(200.0 / 255.0, 196.0 / 255.0, 220.0
 pub struct UI;
 
 impl UI {
+    //setup and show the welcome page
     pub async fn menu() -> usize {
         let boards = [
             "assets/menu/2x3.png",
@@ -139,6 +142,7 @@ impl UI {
         }
     }
 
+    //setup and show the game screen
     pub async fn render_game(nb_pairs: usize) {
         let mut state = GameState::Ongoing;
 
@@ -229,6 +233,7 @@ impl UI {
         }
     }
 
+    //setup and show the endgame screen
     pub async fn endgame() -> EndGameChoice {
         let over_text = "Game Over";
         let font_size_title = 72.0;
@@ -319,6 +324,7 @@ impl UI {
         }
     }
 
+    //draw a rectangle with rounded corners
     fn draw_rounded_rectangle(x: f32, y: f32, w: f32, h: f32, radius: f32, color: Color) {
         draw_rectangle(
             x + radius,
@@ -361,6 +367,7 @@ impl UI {
         );
     }
 
+    //charge and stock the textures of every tiles
     pub async fn charge_textures(tiles: &Tiles, coords: &Vec<(usize, usize)>) -> Vec<Vec<Texture2D>> {
         let mut board = Vec::new();
         for r in 0..tiles.tiles().len() {
@@ -385,6 +392,7 @@ impl UI {
         board
     }
 
+    //give the path for every tiles pictures
     pub fn get_texture_for_tile(tile: &Tile) -> &'static str {
         match tile {
             Tile::Circle1 => "assets/circle/circle_1.png",
@@ -417,6 +425,7 @@ impl UI {
         }
     }
 
+    //take the tile and return the texture
     pub async fn get_texture(tile: &Tile) -> Texture2D {
         let byte = load_file(Self::get_texture_for_tile(tile)).await.unwrap();
         let image = Image::from_file_with_format(&byte, Some(ImageFormat::Png)).unwrap();

@@ -1,12 +1,15 @@
+//this file is the program to run the game
 use macroquad::prelude::*;
 use crate::view::ui::{UI, GREY_PURPLE};
 
+//this enum give the actual GameState
 #[derive(Debug, PartialEq)]
 pub enum GameState {
     Ongoing,
     End,
 }
 
+//this enum give the choice after the endgame method
 #[derive(Debug, PartialEq)]
 pub enum EndGameChoice {
     Again,
@@ -16,6 +19,7 @@ pub enum EndGameChoice {
 pub struct Game;
 
 impl Game {
+    //run the game
     pub async fn run_game() {
         loop {
             let nb_pairs = UI::menu().await;
