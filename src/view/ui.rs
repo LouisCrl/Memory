@@ -4,15 +4,20 @@ use macroquad::prelude::*;
 use crate::model::tiles::{Tiles, TileState, Tile};
 use crate::controller::game::{GameState, EndGameChoice};
 
-const RASPBERRY:Color = Color::new(199.0/255.0, 44.0/255.0, 72.0/255.0, 1.0);
-pub const GREY_PURPLE:Color = Color::new(234.0/255.0, 230.0/255.0, 248.0/255.0, 1.0);
-const DARKER_GREY_PURPLE: Color = Color::new(200.0/255.0, 196.0/255.0, 220.0/255.0, 1.0);
+const RASPBERRY:Color = Color::new(199.0 / 255.0, 44.0 / 255.0, 72.0 / 255.0, 1.0);
+pub const GREY_PURPLE:Color = Color::new(234.0 / 255.0, 230.0 / 255.0, 248.0 / 255.0, 1.0);
+const DARKER_GREY_PURPLE: Color = Color::new(200.0 / 255.0, 196.0 / 255.0, 220.0 / 255.0, 1.0);
 
 pub struct UI;
 
 impl UI {
     pub async fn menu() -> usize {
-        let boards = ["assets/menu/2x3.png", "assets/menu/3x4.png", "assets/menu/4x5.png", "assets/menu/5x6.png"];
+        let boards = [
+            "assets/menu/2x3.png",
+            "assets/menu/3x4.png",
+            "assets/menu/4x5.png",
+            "assets/menu/5x6.png",
+        ];
 
         let mut textures = Vec::new();
         for board in boards {
@@ -58,13 +63,21 @@ impl UI {
         loop {
             if is_mouse_button_pressed(MouseButton::Left) {
                 let (mouse_x, mouse_y) = mouse_position();
-                if coor_quit_box_y - border <= mouse_y && mouse_y <= coor_quit_box_y + box_dimensions.1 + border && coor_box_x - border <= mouse_x && mouse_x <= coor_box_x + box_dimensions.0 + border {
+                if coor_quit_box_y - border <= mouse_y 
+                    && mouse_y <= coor_quit_box_y + box_dimensions.1 + border 
+                    && coor_box_x - border <= mouse_x 
+                    && mouse_x <= coor_box_x + box_dimensions.0 + border 
+                {
                     return 0;
                 }
                 for i in 0..textures.len() {
                     let c_x = (i + 1) as f32;
                     let current_square_x = c_x * coor_square_x;
-                    if coor_square_y - border <= mouse_y && mouse_y <= coor_square_y + dim_square_y + border && current_square_x - border <= mouse_x && mouse_x <= current_square_x + dim_square_x + border {
+                    if coor_square_y - border <= mouse_y 
+                        && mouse_y <= coor_square_y + dim_square_y + border 
+                        && current_square_x - border <= mouse_x 
+                        && mouse_x <= current_square_x + dim_square_x + border 
+                    {
                         while is_mouse_button_down(MouseButton::Left) {
                             clear_background(GREY_PURPLE);
                             next_frame().await;
@@ -82,7 +95,13 @@ impl UI {
             for (i, texture) in textures.iter().enumerate() {
                 let c_x = (i + 1) as f32;
                 let current_square_x = c_x * coor_square_x;
-                draw_rectangle(current_square_x - border, coor_square_y - border, dim_square_x + 2.0 * border, dim_square_y + 2.0 * border, BLACK);
+                draw_rectangle(
+                    current_square_x - border,
+                    coor_square_y - border,
+                    dim_square_x + 2.0 * border,
+                    dim_square_y + 2.0 * border,
+                    BLACK
+                );
                 draw_texture_ex(
                     texture,
                     current_square_x,
@@ -100,8 +119,20 @@ impl UI {
                 draw_text(format_text, coor_format_x, coor_format_y, font_size_format, BLACK);
             }
             //Quit
-            draw_rectangle(coor_box_x - border, coor_quit_box_y - border, box_dimensions.0 + border * 2.0, box_dimensions.1 + border * 2.0, BLACK);
-            draw_rectangle(coor_box_x, coor_quit_box_y, box_dimensions.0, box_dimensions.1, DARKER_GREY_PURPLE);
+            draw_rectangle(
+                coor_box_x - border,
+                coor_quit_box_y - border,
+                box_dimensions.0 + border * 2.0,
+                box_dimensions.1 + border * 2.0,
+                BLACK
+            );
+            draw_rectangle(
+                coor_box_x,
+                coor_quit_box_y,
+                box_dimensions.0,
+                box_dimensions.1,
+                DARKER_GREY_PURPLE
+            );
             draw_text(quit_text, quit_coor_x, quit_coor_y, font_size_button, BLACK);
 
             next_frame().await;
@@ -173,7 +204,14 @@ impl UI {
                     if i == last_index {
                         x = last_x + j as f32 * (texture_width + spacing);
                     }
-                    Self::draw_rounded_rectangle(x, y, texture_width, texture_height, 60.0 / (n / 1.5), RASPBERRY);
+                    Self::draw_rounded_rectangle(
+                        x,
+                        y,
+                        texture_width,
+                        texture_height,
+                        60.0 / (n / 1.5),
+                        RASPBERRY
+                    );
                     draw_texture_ex(
                         texture,
                         x,
@@ -210,7 +248,6 @@ impl UI {
         let again_coor_x = coor_box_x + (box_dimensions.0 - again_text_dimensions.width) / 2.0;
         let again_coor_y = coor_again_box_y + (box_dimensions.1 + again_text_dimensions.height) / 2.0;
 
-
         let coor_quit_box_y = coor_again_box_y + (screen_height() - box_dimensions.1) / 6.0;
 
         let quit_text = "Quit";
@@ -222,11 +259,19 @@ impl UI {
             if is_mouse_button_pressed(MouseButton::Left) {
                 let (mouse_x, mouse_y) = mouse_position();
                 //Again
-                if coor_again_box_y - border <= mouse_y && mouse_y <= coor_again_box_y + box_dimensions.1 + border && coor_box_x - border <= mouse_x && mouse_x <= coor_box_x + box_dimensions.0 + border {
+                if coor_again_box_y - border <= mouse_y 
+                    && mouse_y <= coor_again_box_y + box_dimensions.1 + border 
+                    && coor_box_x - border <= mouse_x 
+                    && mouse_x <= coor_box_x + box_dimensions.0 + border 
+                {
                     return EndGameChoice::Again;
                 }
                 //Quit
-                else if coor_quit_box_y - border <= mouse_y && mouse_y <= coor_quit_box_y + box_dimensions.1 + border && coor_box_x - border <= mouse_x && mouse_x <= coor_box_x + box_dimensions.0 + border {
+                else if coor_quit_box_y - border <= mouse_y 
+                    && mouse_y <= coor_quit_box_y + box_dimensions.1 + border 
+                    && coor_box_x - border <= mouse_x 
+                    && mouse_x <= coor_box_x + box_dimensions.0 + border 
+                {
                     return EndGameChoice::Quit;
                 }
             }
@@ -237,13 +282,37 @@ impl UI {
             draw_text(over_text, coor_text_x, coor_text_y, font_size_title, BLACK);
 
             //Again
-            draw_rectangle(coor_box_x - border, coor_again_box_y - border, box_dimensions.0 + border * 2.0, box_dimensions.1 + border * 2.0, BLACK);
-            draw_rectangle(coor_box_x, coor_again_box_y, box_dimensions.0, box_dimensions.1, DARKER_GREY_PURPLE);
+            draw_rectangle(
+                coor_box_x - border,
+                coor_again_box_y - border,
+                box_dimensions.0 + border * 2.0,
+                box_dimensions.1 + border * 2.0,
+                BLACK
+            );
+            draw_rectangle(
+                coor_box_x,
+                coor_again_box_y,
+                box_dimensions.0,
+                box_dimensions.1,
+                DARKER_GREY_PURPLE
+            );
             draw_text(again_text, again_coor_x, again_coor_y, font_size_button, BLACK);
 
             //Quit
-            draw_rectangle(coor_box_x - border, coor_quit_box_y - border, box_dimensions.0 + border * 2.0, box_dimensions.1 + border * 2.0, BLACK);
-            draw_rectangle(coor_box_x, coor_quit_box_y, box_dimensions.0, box_dimensions.1, DARKER_GREY_PURPLE);
+            draw_rectangle(
+                coor_box_x - border,
+                coor_quit_box_y - border,
+                box_dimensions.0 + border * 2.0,
+                box_dimensions.1 + border * 2.0,
+                BLACK
+            );
+            draw_rectangle(
+                coor_box_x,
+                coor_quit_box_y,
+                box_dimensions.0,
+                box_dimensions.1,
+                DARKER_GREY_PURPLE
+            );
             draw_text(quit_text, quit_coor_x, quit_coor_y, font_size_button, BLACK);
 
             next_frame().await;
@@ -251,13 +320,45 @@ impl UI {
     }
 
     fn draw_rounded_rectangle(x: f32, y: f32, w: f32, h: f32, radius: f32, color: Color) {
-        draw_rectangle(x + radius, y, w - 2.0 * radius, h, color);
-        draw_rectangle(x, y + radius, w, h - 2.0 * radius, color);
+        draw_rectangle(
+            x + radius,
+            y,
+            w - 2.0 * radius,
+            h,
+            color
+        );
+        draw_rectangle(
+            x,
+            y + radius,
+            w,
+            h - 2.0 * radius,
+            color
+        );
 
-        draw_circle(x + radius, y + radius, radius, color);                       // coin haut gauche
-        draw_circle(x + w - radius, y + radius, radius, color);                  // coin haut droit
-        draw_circle(x + radius, y + h - radius, radius, color);                  // coin bas gauche
-        draw_circle(x + w - radius, y + h - radius, radius, color);              // coin bas droit
+        draw_circle(
+            x + radius,
+            y + radius,
+            radius,
+            color
+        );
+        draw_circle(
+            x + w - radius,
+            y + radius,
+            radius,
+            color
+        );
+        draw_circle(
+            x + radius,
+            y + h - radius,
+            radius,
+            color
+        );
+        draw_circle(
+            x + w - radius,
+            y + h - radius,
+            radius,
+            color
+        );
     }
 
     pub async fn charge_textures(tiles: &Tiles, coords: &Vec<(usize, usize)>) -> Vec<Vec<Texture2D>> {
@@ -270,7 +371,7 @@ impl UI {
                     TileState::NotDiscovered => {
                         if coords.contains(&(r, c)) {
                             lines.push(Self::get_texture(&tiles.tiles()[r][c]).await);
-                        }else {
+                        } else {
                             let byte = load_file("assets/empty.png").await.unwrap();
                             let image = Image::from_file_with_format(&byte, Some(ImageFormat::Png)).unwrap();
                             let texture = Texture2D::from_image(&image);
